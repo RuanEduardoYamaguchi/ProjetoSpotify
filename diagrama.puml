@@ -1,0 +1,47 @@
+@startuml
+skinparam monochrome true
+skinparam classAttributeIconSize 0
+
+abstract class Usuario {
+  - id: int
+  - nome: String
+  - playlists: List<Playlist>
+  + criarPlaylist(nome): Playlist
+  + listarPlaylists(): void
+}
+
+class UsuarioComum {
+  + getTipo(): String
+}
+
+class Administrador {
+  + cadastrarMusica()
+  + getTipo(): String
+}
+
+class Playlist {
+  - nome: String
+  - musicas: List<Musica>
+  + adicionarMusica()
+}
+
+class Musica {
+  - id: int
+  - titulo: String
+  - artista: String
+  - duracao: double
+}
+
+class SistemaSpotify {
+  - catalogo: List<Musica>
+  - usuarios: List<Usuario>
+  + listarCatalogo(): void
+}
+
+UsuarioComum --|> Usuario
+Administrador --|> Usuario
+Usuario "1" -- "0..*" Playlist
+Playlist "1" -- "0..*" Musica
+SistemaSpotify "1" -- "0..*" Usuario
+SistemaSpotify "1" -- "0..*" Musica
+@enduml
